@@ -58,4 +58,43 @@
       <% end %>
     </div>
 
+        <!-- Tasks for Tomorrow -->
+    <div id="tasks-tomorrow" class="task-group" style="display:none;">
+      <% if @tasks_for_tomorrow.present? %>
+        <h2>Tasks for Tomorrow</h2>
+        <table>
+          <!-- Table headers -->
+          <tbody>
+            <% @tasks_for_tomorrow.each do |task| %>
+              <tr class="<%= 'completed' if task.completed %>">
+                <!-- Task details -->
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <p>No tasks for tomorrow.</p>
+      <% end %>
+    </div>
+
+    <!-- Tasks for This Week -->
+    <div id="tasks-this-week" class="task-group" style="display:none;">
+      <% if @tasks_for_this_week.present? %>
+        <h2>Tasks for This Week</h2>
+        <table>
+          <!-- Table headers -->
+          <tbody>
+            <% @tasks_for_this_week.each do |task| %>
+              <tr class="<%= 'completed' if task.completed %>">
+                <!-- Task details -->
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <p>No tasks for this week.</p>
+      <% end %>
+    </div>
+
+
 </div>
