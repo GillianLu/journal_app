@@ -1,0 +1,35 @@
+<%= stylesheet_link_tag "application"%>
+<%= stylesheet_link_tag "sidebar" %>
+<%= stylesheet_link_tag "main_content" %>
+<%= stylesheet_link_tag "form" %>
+<%= stylesheet_link_tag "category" %>
+
+<%= javascript_include_tag "sidebar" %>
+<%= javascript_include_tag "filter" %>
+
+
+<%= form_with model: category do |form| %>
+    <%= link_to "Back", categories_path %>
+    <div>
+      <%= form.label :title %><br>
+      <%= form.text_field :title, placeholder: 'Input title'%>
+      <% category.errors.full_messages_for(:title).each do |message| %>
+        <div><%= message %></div>
+      <% end %>
+    </div>
+
+    <div>
+      <%= form.label :description %><br>
+      <%= form.text_area :description %><br>
+      <% category.errors.full_messages_for(:description).each do |message| %>
+        <div><%= message %></div>
+      <% end %>
+    </div>
+
+    <div>
+      <%= form.submit %>
+      
+    </div>
+<% end %>
+
+

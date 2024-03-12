@@ -1,0 +1,36 @@
+<%= stylesheet_link_tag "application"%>
+<%= stylesheet_link_tag "sidebar" %>
+<%= stylesheet_link_tag "main_content" %>
+<%= stylesheet_link_tag "form" %>
+<%= stylesheet_link_tag "category" %>
+
+<%= javascript_include_tag "sidebar" %>
+<%= javascript_include_tag "filter" %>
+<%= javascript_include_tag "toggle" %>
+
+
+<div class="sidebar" id="mySidebar">
+  <ul class="sidebar-items">
+    <li class="sidebar-item">
+      <%= link_to "☰", "#", id: "sidebarToggle", class: "toggle-btn" %>
+    </li>
+    <li class="sidebar-item"><%= link_to "Categories", categories_path%></li>
+    <% if user_signed_in? %>
+      <li class="sidebar-item">
+        <%= button_to 'Sign Out', destroy_user_session_path,  method: :delete%>
+      </li>
+      <li class="sidebar-item">
+          <%= link_to "Edit Profile", edit_user_registration_path%>
+      </li>
+   <% else %>
+     <li class="sidebar-item">
+         <%= link_to "Sign Up", new_user_registration_path%>
+     </li>
+
+     <li class="sidebar-item">
+         <%= link_to "Sign In", new_user_session_path %>
+     </li>
+  <% end %>
+
+  </ul>
+</div>

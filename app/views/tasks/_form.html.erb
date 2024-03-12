@@ -1,0 +1,20 @@
+<%= form_with model: [ @category, @category.tasks.build ], local: true do |form| %>
+  <p>
+    <%= form.label :title %><br>
+    <%= form.text_field :title %>
+  </p>
+
+  <p>
+    <%= form.label :description %><br>
+    <%= form.text_area :description %>
+  </p>
+
+  <p>
+    <%= form.label :deadline %><br>
+    <%= form.date_field :deadline %>
+  </p>
+
+  <p>
+    <%= form.submit %>
+  </p>
+<% end %>

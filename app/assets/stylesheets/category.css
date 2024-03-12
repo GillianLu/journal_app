@@ -1,0 +1,37 @@
+.category-container {
+    background-color: #DCDCDC;
+    padding: 30px;
+}
+.actions-container {
+    display: flex;
+    align-items: center;
+    padding-top: 30px;
+    gap: 10px;
+}
+
+.actions-container a {
+    display: inline-block;
+    text-decoration: none;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 10px;
+
+}
+
+.actions-container a[href*= "edit"] {
+    background-color: #007bff ;
+
+}
+
+.actions-container a[href*="new"] {
+    background-color: #28a745;
+
+}
+.destroy-btn {
+    background-color: red;
+    text-decoration: none;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 10px;
+    border: none;
+}

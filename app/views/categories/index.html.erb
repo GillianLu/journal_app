@@ -1,0 +1,22 @@
+<%= render "categories/sidebar" %>
+
+<div class="content" id="mainContent">
+  <h1>Categories</h1>
+  <div class="gallery">
+    <% @categories.each do |category| %>
+
+      <div class="gallery-item">
+        <%= link_to category_path(category) do %>
+          <div class="gallery-item-title">
+            <%= category.title %>
+          </div>
+        <% end %>
+      </div>
+
+    <% end %>
+  </div>
+
+  <div class="new-category-button-container">
+    <%= link_to "New Category", new_category_path, class: 'new-category-button' %>
+  </div>
+</div>

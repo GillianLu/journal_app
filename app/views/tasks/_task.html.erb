@@ -1,0 +1,31 @@
+<h2>Tasks</h2>
+
+<table class="tasks-table">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Deadline</th>
+      <th>Completed</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @category.tasks.each do |task| %>
+    <tr id="task_<%= task.id %>" class="<%= 'completed' if task.completed %>">
+      <td><%= task.title %></td>
+      <td><%= task.description %></td>
+      <td><%= task.deadline %></td>
+      <td>
+        <%= form_with(model: [ @category, task ], local: true, id: "completed_form_#{task.id}") do |form| %>
+          <%= form.check_box :completed, checked: task.completed, class: "toggle-completion", data: { task_id: task.id } %>
+        <% end %>
+      </td>
+      <td>
+        <%= link_to 'Edit', edit_category_task_path(@category, task) %>
+        <%= button_to 'Destroy', category_task_path(@category, task), method: :delete, data: { confirm: "Are you sure?" }, class: 'btn btn-danger' %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
