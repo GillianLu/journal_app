@@ -104,8 +104,25 @@ th {
   color: white;
 }
 
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button-container a {
+  text-decoration: none;
+  color: #fff;
+  background-color: #007bff;
+  padding: 10px 15px;
+  border-radius: 10px;
+  margin-right: 10px;
+}
+
+
 th, td{
   height: 40px;
+  padding: 10px;
   text-align: center;
   vertical-align: middle;
   border: 1px solid black;

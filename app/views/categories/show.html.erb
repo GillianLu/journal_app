@@ -15,8 +15,8 @@
 
       <div class="task-container">
         <%= link_to 'Today', '#', class: 'filter-button', data: { filter: 'today' } %>
-        <%= link_to 'Tomorrow', '#;', class: 'filter-button', data: { filter: 'tomorrow' } %>
-        <%= link_to 'This Week', '#;', class: 'filter-button', data: { filter: 'this_week' } %>
+        <%= link_to 'Tomorrow', '#', class: 'filter-button', data: { filter: 'tomorrow' } %>
+        <%= link_to 'This Week', '#', class: 'filter-button', data: { filter: 'this_week' } %>
       </div>
 
       <div id="tasks-today" class="task-group">
@@ -46,7 +46,7 @@
                   </td>
                   <td>
                     <div class="button-container">
-                      <%= link_to 'Edit', edit_category_task_path(@category, task), class: "btn btn-primary" %>
+                      <%= link_to 'Edit', edit_category_task_path(@category, task)%>
                       <%= button_to 'Delete', category_task_path(@category, task), method: :delete, data: { confirm: 'Are you sure?' }, class: 'destroy-btn' %>
                     </div>
                   </td>

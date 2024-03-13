@@ -6,8 +6,6 @@
       button.addEventListener('click', (event) => {
         event.preventDefault(); 
         const filter = button.getAttribute('data-filter');
-
-        
         taskGroups.forEach(group => {
           group.style.display = 'none';
         });

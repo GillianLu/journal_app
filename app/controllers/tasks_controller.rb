@@ -14,7 +14,7 @@ class TasksController < ApplicationController
   end
 
   def create
-    @category = Category.find(params[:category_id]) # Ensure this is correctly fetching the category
+    @category = Category.find(params[:category_id])
     @task = @category.tasks.build(task_params)
     if @task.save
       redirect_to category_path(@category), notice: 'Task was successfully added.'
@@ -22,7 +22,6 @@ class TasksController < ApplicationController
       render :new, status: :unprocessable_entity
     end
   end
-
 
 
   def edit
@@ -45,17 +44,20 @@ class TasksController < ApplicationController
   end
 
   def toggle_completion
+    @task = Task.find(params[:id])
     @task.completed = !@task.completed
-    if @task.save
-      respond_to do |format|
-        format.json { render json: { status: 'success', completed: @task.completed }, status: :ok }
-      end
-    else
-      respond_to do |format|
-        format.json { render json: @task.errors.full_messages, status: :unprocessable_entity }
+
+    respond_to do |format|
+      if @task.save
+        format.html { redirect_to category_path(@task.category_id), notice: 'Task was successfully updated.' }
+        format.json { render :show, status: :ok, location: @task }
+      else
+        format.html { render :edit }
+        format.json { render json: @task.errors, status: :unprocessable_entity }
       end
     end
   end
+
 
   private
   def set_category
