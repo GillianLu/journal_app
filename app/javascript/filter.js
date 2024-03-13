@@ -4,15 +4,15 @@
 
     filterButtons.forEach(button => {
       button.addEventListener('click', (event) => {
-        event.preventDefault(); // Prevent the link from navigating.
+        event.preventDefault(); 
         const filter = button.getAttribute('data-filter');
 
-        // Hide all task groups initially.
+        
         taskGroups.forEach(group => {
           group.style.display = 'none';
         });
 
-        // Show the selected task group.
+        
         switch (filter) {
           case 'today':
             document.getElementById('tasks-today').style.display = 'block';

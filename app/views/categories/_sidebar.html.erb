@@ -12,7 +12,7 @@
 <div class="sidebar" id="mySidebar">
   <ul class="sidebar-items">
     <li class="sidebar-item">
-      <%= link_to "☰", "#", id: "sidebarToggle", class: "toggle-btn" %>
+      <%= link_to "☰", "javascript:void(0);", id: "sidebarToggle", class: "toggle-btn" %>
     </li>
     <li class="sidebar-item"><%= link_to "Categories", categories_path%></li>
     <% if user_signed_in? %>

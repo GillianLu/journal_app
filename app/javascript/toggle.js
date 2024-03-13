@@ -1,5 +1,3 @@
-// app/javascript/toggle.js
-
 document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll('.toggle-completion').forEach(checkbox => {
     checkbox.addEventListener('change', function() {

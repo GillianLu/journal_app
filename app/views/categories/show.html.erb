@@ -1,100 +1,145 @@
 <%= render "categories/sidebar" %>
+<body class=main-body>
+  <div class="content" id="mainContent">
+      <div class="category-container">
+          <%= link_to "Back", categories_path %>
+          <h1><%= @category.title %></h1>
+          <p><%= @category.description %></p>
 
-<div class="content" id="mainContent">
-    <div class="category-container">
-        <%= link_to "Back", categories_path %>
-        <h1><%= @category.title %></h1>
-        <p><%= @category.description %></p>
+          <div class="actions-container">
+              <%= link_to "Add a Task", new_category_task_path(@category) %>  
+              <%= link_to "Edit", edit_category_path(@category) %>
+              <%= button_to 'Delete', category_path(@category), method: :delete, data: { confirm: 'Are you sure?' }, class: 'destroy-btn' %>
+          </div>
+      </div>
 
-        <div class="actions-container">
-            <%= link_to "Add a Task", new_category_task_path(@category) %>  
-            <%= link_to "Edit", edit_category_path(@category) %>
-            <%= button_to 'Destroy', category_path(@category), method: :delete, data: { confirm: 'Are you sure?' }, class: 'destroy-btn' %>
-        </div>
-    </div>
+      <div class="task-container">
+        <%= link_to 'Today', '#', class: 'filter-button', data: { filter: 'today' } %>
+        <%= link_to 'Tomorrow', '#;', class: 'filter-button', data: { filter: 'tomorrow' } %>
+        <%= link_to 'This Week', '#;', class: 'filter-button', data: { filter: 'this_week' } %>
+      </div>
 
-    <div class="task-container">
-      <%= link_to 'Today', '#', class: 'filter-button', data: { filter: 'today' } %>
-      <%= link_to 'Tomorrow', '#', class: 'filter-button', data: { filter: 'tomorrow' } %>
-      <%= link_to 'This Week', '#', class: 'filter-button', data: { filter: 'this_week' }%>
-    </div>
-
-    <div id="tasks-today" class="task-group">
-      <% if @tasks_for_today.present? %>
-        <h2>Tasks for Today</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Description</th>
-              <th>Deadline</th>
-              <th>Completed</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @tasks_for_today.each do |task| %>
-              <tr id="task_<%= task.id %>" class="<%= 'completed' if task.completed %>">
-                <td><%= task.title %></td>
-                <td><%= task.description %></td>
-                <td><%= task.deadline %></td>
-                <td>
-                  <%= form_with(model: [ @category, task ], url: toggle_completion_category_task_path(@category, task), method: :patch, local: true, id: "form_task_#{task.id}") do |form| %>
-                    <%= form.check_box :completed, checked: task.completed, class: "toggle-completion", data: { task_id: task.id } %>
-                  <% end %>
-                </td>
-                <td>
-                  <div class="button-container">
-                    <%= link_to 'Edit', edit_category_task_path(@category, task), class: "btn btn-primary" %>
-                    <%= button_to 'Delete', category_task_path(@category, task), method: :delete, data: { confirm: 'Are you sure?' }, class: 'destroy-btn' %>
-                  </div>
-                </td>
+      <div id="tasks-today" class="task-group">
+        <% if @tasks_for_today.present? %>
+          <h2>Tasks for Today</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Deadline</th>
+                <th>Completed</th>
+                <th>Actions</th>
               </tr>
-            <% end %>
-          </tbody>
-        </table>
-      <% else %>
-        <p>No tasks for today.</p>
-      <% end %>
-    </div>
+            </thead>
 
-        <!-- Tasks for Tomorrow -->
-    <div id="tasks-tomorrow" class="task-group" style="display:none;">
-      <% if @tasks_for_tomorrow.present? %>
-        <h2>Tasks for Tomorrow</h2>
-        <table>
-          <!-- Table headers -->
-          <tbody>
-            <% @tasks_for_tomorrow.each do |task| %>
-              <tr class="<%= 'completed' if task.completed %>">
-                <!-- Task details -->
+            <tbody>
+              <% @tasks_for_today.each do |task| %>
+                <tr id="task_<%= task.id %>" class="<%= 'completed' if task.completed %>">
+                  <td><%= task.title %></td>
+                  <td><%= task.description %></td>
+                  <td><%= task.deadline %></td>
+                  <td>
+                    <%= form_with(model: [ @category, task ], url: toggle_completion_category_task_path(@category, task), method: :patch, local: true, id: "form_task_#{task.id}") do |form| %>
+                      <%= form.check_box :completed, checked: task.completed, class: "toggle-completion", data: { task_id: task.id, category_id: @category.id } %>
+                    <% end %>
+                  </td>
+                  <td>
+                    <div class="button-container">
+                      <%= link_to 'Edit', edit_category_task_path(@category, task), class: "btn btn-primary" %>
+                      <%= button_to 'Delete', category_task_path(@category, task), method: :delete, data: { confirm: 'Are you sure?' }, class: 'destroy-btn' %>
+                    </div>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <% else %>
+          <p>No tasks for today.</p>
+        <% end %>
+      </div>
+      <div id="tasks-tomorrow" class="task-group" style="display:none;">
+        <% if @tasks_for_tomorrow.present? %>
+          <h2>Tasks for Tomorrow</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Deadline</th>
+                <th>Completed</th>
+                <th>Actions</th>
               </tr>
-            <% end %>
-          </tbody>
-        </table>
-      <% else %>
-        <p>No tasks for tomorrow.</p>
-      <% end %>
-    </div>
+            </thead>
+            <tbody>
+              <% @tasks_for_tomorrow.each do |task| %>
+                <tr id="task_<%= task.id %>" class="<%= 'completed' if task.completed %>">
+                  <td><%= task.title %></td>
+                  <td><%= task.description %></td>
+                  <td><%= task.deadline %></td>
+                  <td>
+                    <%= form_with(model: [ @category, task ], url: toggle_completion_category_task_path(@category, task), method: :patch, local: true, id: "form_task_#{task.id}") do |form| %>
+                      <%= form.check_box :completed, checked: task.completed, class: "toggle-completion", data: { task_id: task.id } %>
+                    <% end %>
+                  </td>
+                  <td>
+                    <div class="button-container">
+                      <%= link_to 'Edit', edit_category_task_path(@category, task), class: "btn btn-primary" %>
+                      <%= button_to 'Delete', category_task_path(@category, task), method: :delete, data: { confirm: 'Are you sure?' }, class: 'destroy-btn' %>
+                    </div>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <% else %>
+          <p>No tasks for tomorrow.</p>
+        <% end %>
+      </div>
 
-    <!-- Tasks for This Week -->
-    <div id="tasks-this-week" class="task-group" style="display:none;">
-      <% if @tasks_for_this_week.present? %>
-        <h2>Tasks for This Week</h2>
-        <table>
-          <!-- Table headers -->
-          <tbody>
-            <% @tasks_for_this_week.each do |task| %>
-              <tr class="<%= 'completed' if task.completed %>">
-                <!-- Task details -->
+      <!-- Tasks for This Week -->
+      <div id="tasks-this-week" class="task-group" style="display:none;">
+        <% if @tasks_for_this_week.present? %>
+          <h2>Tasks for This Week</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Deadline</th>
+                <th>Completed</th>
+                <th>Actions</th>
               </tr>
-            <% end %>
-          </tbody>
-        </table>
-      <% else %>
-        <p>No tasks for this week.</p>
-      <% end %>
-    </div>
+            </thead>
+
+            <tbody>
+              <% @tasks_for_this_week.each do |task| %>
+                <tr id="task_<%= task.id %>" class="<%= 'completed' if task.completed %>">
+                  <td><%= task.title %></td>
+                  <td><%= task.description %></td>
+                  <td><%= task.deadline %></td>
+                  <td>
+                    <%= form_with(model: [ @category, task ], url: toggle_completion_category_task_path(@category, task), method: :patch, local: true, id: "form_task_#{task.id}") do |form| %>
+                      <%= form.check_box :completed, checked: task.completed, class: "toggle-completion", data: { task_id: task.id } %>
+                    <% end %>
+                  </td>
+                  <td>
+                    <div class="button-container">
+                      <%= link_to 'Edit', edit_category_task_path(@category, task), class: "btn btn-primary" %>
+                      <%= button_to 'Delete', category_task_path(@category, task), method: :delete, data: { confirm: 'Are you sure?' }, class: 'destroy-btn' %>
+                    </div>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+
+          </table>
+          <% else %>
+            <p>No tasks for this week.</p>
+          <% end %>
+      </div>
 
 
-</div>
+  </div>
+
+</body>
