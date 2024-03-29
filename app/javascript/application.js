@@ -2,5 +2,6 @@
 import "@hotwired/turbo-rails"
 import "controllers"
 
+//issues were prevalent because ujs was not imported 
 import Rails from '@rails/ujs';
 Rails.start();

@@ -1,15 +1,14 @@
 class CategoriesController < ApplicationController
-  before_action :authenticate_user!
+  before_action :set_category, only: [:show, :edit, :update, :destroy ]
 
   def index
     @categories = current_user.categories
   end
 
   def show
-    @category = Category.find(params[:id])
-    @tasks_for_today = @category.tasks.where(deadline: Date.today.all_day)
-    @tasks_for_tomorrow = @category.tasks.where('deadline >= ? AND deadline < ?', Date.tomorrow.beginning_of_day, 2.days.from_now.beginning_of_day)
-    @tasks_for_this_week = @category.tasks.where(deadline: Date.today.beginning_of_day..1.week.from_now.end_of_day)
+    @tasks_for_today = @category.tasks.today
+    @tasks_for_tomorrow = @category.tasks.tomorrow
+    @tasks_for_this_week = @category.tasks.this_week
   end
 
   def new
@@ -27,11 +26,9 @@ class CategoriesController < ApplicationController
   end
 
   def edit
-    @category = current_user.categories.find(params[:id])
   end
 
   def update
-    @category = current_user.categories.find(params[:id])
 
     if @category.update(category_params)
       redirect_to @category, notice: 'Category was successfully updated!'
@@ -48,6 +45,10 @@ class CategoriesController < ApplicationController
   end
 
   private
+
+    def set_category
+      @category = current_user.categories.find(params[:id])
+    end
 
     def category_params
       params.require(:category).permit(:title, :description)
